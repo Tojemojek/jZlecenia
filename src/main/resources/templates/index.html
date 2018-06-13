@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>jZlecenia</title>
+    <th:block th:include="layout/header"></th:block>
+</head>
+<body>
+
+<div class="container">
+    <div th:if="${message}">
+        <h2 th:text="${message}"/>
+    </div>
+</div>
+
+<div class="container">
+    <h2>Wgraj plik</h2>
+    <div>
+        <form class="form-horizontal" th:action="@{/}" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Twój pliczek</label>
+                <div class="col-sm-10">
+                    <input type="file" class="form-control" th:name="file"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2">
+                    <button type="submit" class="btn btn-primary">Wgraj</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<th:block th:include="layout/footer"></th:block>
+</body>
+
+</html>
