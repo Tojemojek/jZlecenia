@@ -1,15 +1,16 @@
 package pl.kostrowski.doka.jzlecenia.dao;
 
+
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import pl.kostrowski.doka.jzlecenia.model.LineFromFile;
+import pl.kostrowski.doka.jzlecenia.model.MyFile;
 
 import java.util.List;
 
 @Repository
-public interface DaneDao extends CrudRepository<LineFromFile, Long> {
+public interface MyFileDao extends CrudRepository<MyFile, Long> {
 
-    List<LineFromFile> findAllByNrZlecenia(String noZlecenia);
-
+    List<MyFile> findAll();
     void deleteByFileName(String filename);
+
 }

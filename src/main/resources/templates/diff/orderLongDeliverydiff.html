@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <title>Długie zlecenia</title>
+    <th:block th:include="layout/header"></th:block>
+</head>
+<body>
+
+<div class="container">
+    <p></p>
+    <div>
+    <form class="form-inline" th:action="@{/details/diff/long}" method="get">
+        <div class="form-group">
+            <label class="col-sm-6 control-label">Wyszukaj zamówienia o czasach wydania ponad</label>
+            <div class="col-sm-4">
+                <input type="number" class="form-control" th:name="dateDiff"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2">
+                <button type="submit" class="btn btn-primary">Szukaj</button>
+            </div>
+        </div>
+    </form>
+</div>
+    <p></p>
+</div>
+
+
+<div class="container">
+
+    <h2>Zlecenia o długich czasach wydania</h2>
+
+     <div th:if="${not #lists.isEmpty(showDiff)}">
+
+        <h2 th:text="${'Długich wydań wykryto: ' + showDiff.size()}"> </h2>
+
+        <table class="table table-striped">
+            <tr>
+                <th>Nr zlecenia</th>
+                <th>Data utworzenia zlecenia</th>
+                <th>Data wydania</th>
+                <th>Czas na reakcję w dniach</th>
+
+            </tr>
+            <tr th:each="pos : ${showDiff}">
+                <td>
+                    <a th:href="@{/details/order(orderNo=${pos.getNrZlecenia()})}"  th:text="${pos.getNrZlecenia()}"></a>
+                </td>
+                <td th:text="${pos.getDataUtworzenia()}"></td>
+                <td th:text="${pos.getDataDostawy()}"></td>
+                <td th:text="${pos.getCzasNaReakcje()}"></td>
+            </tr>
+        </table>
+        </span>
+    </div>
+</div>
+
+<th:block th:include="layout/footer"></th:block>
+</body>
+</html>

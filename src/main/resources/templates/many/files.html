@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <title>Wgrane pliki</title>
+    <th:block th:include="layout/header"></th:block>
+</head>
+<body>
+
+<div class="container">
+    <h2>Wybierz plik do wgrania</h2>
+
+    <div>
+        <form class="form-inline" th:action="@{/upload/file}" method="POST" enctype="multipart/form-data">
+            <input type="file" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" th:name="file">
+            <button type="submit" class="btn btn-primary">Wgraj</button>
+        </form>
+    </div>
+</div>
+
+
+<div class="container">
+    <h2>Wgrane pliki</h2>
+    <div th:if="${not #lists.isEmpty(uploadedFiles)}">
+        <table class="table table-striped">
+            <tr>
+                <th>Nazwa pliku</th>
+                <th>Kiedy wgrany</th>
+                <th>Skasuj plik</th>
+            </tr>
+            <tr th:each="pos : ${uploadedFiles}">
+                <td th:text="${pos.getFileName()}"></td>
+                <td th:text="${pos.getInputTimeStamp()}"></td>
+                <td>
+                <form class="form-inline" th:action="@{/delete/file}" method="POST">
+                    <input type="hidden" th:value="${pos.getFileName()}"  th:name="fileName">
+                    <button type="submit" class="btn btn-danger">SKASUJ</button>
+                </form>
+                </td>
+            </tr>
+        </table>
+        </span>
+    </div>
+</div>
+
+<th:block th:include="layout/footer"></th:block>
+</body>
+</html>

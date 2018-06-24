@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <title>Zlecenia w systemie</title>
+    <th:block th:include="layout/header"></th:block>
+</head>
+<body>
+<div class="container">
+
+    <h2>Zlecenia</h2>
+    <p>Na tej liście wymienionę są wszystkie zlecenia które zostały wgrane w plikach</p>
+    <p>Zlecenia, które są zmienione wyświetlone są we wszystkich wersjach </p>
+    <div th:if="${not #lists.isEmpty(allOrders)}">
+
+        <h2 th:text="${'Liczba zleceń ' + allOrders.size()}"> </h2>
+        <table class="table table-striped">
+            <tr>
+                <th>Nr zlecenia</th>
+                <th>Liczba Linii w zleceniu</th>
+                <th>Łączny tonaż</th>
+            </tr>
+            <tr th:each="pos : ${allOrders}">
+                <td>
+                    <a th:href="@{/details/order(orderNo=${pos.getNrZlecenia()})}"  th:text="${pos.getNrZlecenia()}"></a>
+                </td>
+                <td th:text="${pos.getLiczbaLinii()}"></td>
+                <td th:text="${pos.getTonaz()}"></td>
+            </tr>
+        </table>
+        </span>
+    </div>
+</div>
+
+<th:block th:include="layout/footer"></th:block>
+</body>
+</html>

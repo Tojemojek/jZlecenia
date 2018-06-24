@@ -11,7 +11,7 @@
 <div class="container">
     <div th:fragment="header">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" th:href="@{/}">Home</a>
+            <a class="navbar-brand" th:href="@{/}">START!</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -19,40 +19,36 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Klasyfikacje medalowe
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" th:href="@{/medals/songs}">Utwory</a>
-                            <a class="dropdown-item" th:href="@{/medals/movies}">Filmy</a>
-                            <a class="dropdown-item" th:href="@{/medals/artists}">Artyści</a>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Wszystkie i wszyscy
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" th:href="@{/all/songs}">Utwory</a>
-                            <a class="dropdown-item" th:href="@{/all/movies}">Filmy</a>
-                            <a class="dropdown-item" th:href="@{/all/artists}">Artyści</a>
-                            <a class="dropdown-item" th:href="@{/all/lists}">Listy</a>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Wgrywanie i oglądanie
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" th:href="@{/details/files}">Pliki</a>
+                            <a class="dropdown-item" th:href="@{/details/orders}">Zlecenia</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Analizy
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" th:href="@{/details/order}">Zlecenie</a>
+                            <a class="dropdown-item" th:href="@{/details/diff}">Zmiany w zleceniach</a>
+                            <a class="dropdown-item" th:href="@{/details/diff/short}">Krótkie zlecenia</a>
+                            <a class="dropdown-item" th:href="@{/details/diff/long}">Długie zlecenia</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown4" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Linki techniczne
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" th:href="@{/download}">Pobieranie</a>
-                            <a class="dropdown-item" th:href="@{/persist}">Zapisywanie w bazie danych</a>
+                            <a class="dropdown-item" th:href="@{/h2}">Baza Danych</a>
                         </div>
                     </li>
-
-
                 </ul>
             </div>
         </nav>

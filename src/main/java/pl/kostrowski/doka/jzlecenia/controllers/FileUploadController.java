@@ -20,9 +20,7 @@ public class FileUploadController {
         this.getFromUserAndParse = getFromUserAndParse;
     }
 
-
-
-    @PostMapping("/")
+    @PostMapping("/upload/file")
     public String handleFileUpload(@RequestParam("file") MultipartFile file,
                                    RedirectAttributes redirectAttributes) {
 
@@ -35,6 +33,6 @@ public class FileUploadController {
         redirectAttributes.addFlashAttribute("message",
                 "Udało się wgrać i obrobić " + file.getOriginalFilename() + "!");
 
-        return "redirect:/";
+        return "redirect:/details/files";
     }
 }

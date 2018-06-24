@@ -19,7 +19,7 @@
     </parent>
 
     <properties>
-        <version.app>0.0.1-SNAPSHOT</version.app>
+        <version.app>0.0.2-SNAPSHOT</version.app>
         <version.spring.boot.starter.actuator>2.0.2.RELEASE</version.spring.boot.starter.actuator>
         <version.spring.boot.starter.thymeleaf>2.0.2.RELEASE</version.spring.boot.starter.thymeleaf>
         <version.spring.boot.starter.web>2.0.2.RELEASE</version.spring.boot.starter.web>
@@ -32,6 +32,8 @@
         <version.apache.poi>3.17</version.apache.poi>
         <version.apache.poi>3.17</version.apache.poi>
         <version.apache.poi.ooxml>3.17</version.apache.poi.ooxml>
+        <version.apache.commons.io>2.6</version.apache.commons.io>
+        <version.apache.commons.lang>3.7</version.apache.commons.lang>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -103,6 +105,17 @@
             <version>${version.apache.poi.ooxml}</version>
         </dependency>
 
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${version.apache.commons.io}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${version.apache.commons.lang}</version>
+        </dependency>
     </dependencies>
 
     <build>

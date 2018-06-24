@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <title>Zlecenia zmienione</title>
+    <th:block th:include="layout/header"></th:block>
+</head>
+<body>
+<div class="container">
+
+
+    <h2>Zlecenia które się zmieniły</h2>
+    <p>Pod względem tonażu lub liczby linii</p>
+
+     <div th:if="${not #lists.isEmpty(showDiff)}">
+
+        <h2 th:text="${'Zmieniony zleceń wykryto: ' + showDiff.size()}"> </h2>
+
+        <table class="table table-striped">
+            <tr>
+                <th>Nr zlecenia</th>
+                <th>Różne tonaże?</th>
+                <th>Różne liczby linii?</th>
+
+            </tr>
+            <tr th:each="pos : ${showDiff}">
+                <td>
+                    <a th:href="@{/details/order(orderNo=${pos.getNrZlecenia()})}"  th:text="${pos.getNrZlecenia()}"></a>
+                </td>
+                <td th:text="${pos.getCzyRozneIlosciTonazu()}"></td>
+                <td th:text="${pos.getCzyRozneIlosciLinii()}"></td>
+            </tr>
+        </table>
+        </span>
+    </div>
+</div>
+
+<th:block th:include="layout/footer"></th:block>
+</body>
+</html>
