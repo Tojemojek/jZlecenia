@@ -1,6 +1,5 @@
 package pl.kostrowski.doka.jzlecenia.service;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.net.URISyntaxException;
 
 
 @Service
@@ -25,14 +23,10 @@ public class FileRetriever {
 
     public File passFileOn(MultipartFile multipartFile) {
 
-        String fileSubfolder = environment.getProperty("save.file.path");
-        String directoryPath = new File(".").getAbsolutePath();
-        directoryPath = directoryPath.substring(0,directoryPath.lastIndexOf("."));
-        String filePath = directoryPath + fileSubfolder + File.separator;
+        String filePath = getSavePath();
+        String fileName = getFileName(multipartFile);
 
-        LOG.info("Ścieżka zapisu = " + filePath);
-
-        String fullFilePathWithName = filePath + multipartFile.getOriginalFilename();
+        String fullFilePathWithName = filePath + fileName;
 
         LOG.info("Ścieżka zapisu z nazwą pliku = " + fullFilePathWithName);
 
@@ -48,5 +42,24 @@ public class FileRetriever {
         }
 
         return null;
+    }
+
+    private String getSavePath() {
+        String fileSubfolder = environment.getProperty("save.file.path");
+        String directoryPath = new File(".").getAbsolutePath();
+        directoryPath = directoryPath.substring(0, directoryPath.lastIndexOf("."));
+        String filePath = directoryPath + fileSubfolder + File.separator;
+        LOG.info("Ścieżka zapisu = " + filePath);
+        return filePath;
+    }
+
+    private String getFileName(MultipartFile multipartFile) {
+
+        String ret = multipartFile.getOriginalFilename();
+        if (ret.contains(File.separator)){
+            int i = ret.lastIndexOf(File.separator);
+            ret = ret.substring(i,ret.length());
+        }
+        return ret;
     }
 }
