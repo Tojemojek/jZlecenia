@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Data
 @Entity
 @Table(name = "pliki")
-public class MyFile {
+public class InputFile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

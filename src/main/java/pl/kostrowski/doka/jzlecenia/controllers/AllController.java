@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pl.kostrowski.doka.jzlecenia.dto.OrderDto;
-import pl.kostrowski.doka.jzlecenia.model.MyFile;
+import pl.kostrowski.doka.jzlecenia.model.InputFile;
 import pl.kostrowski.doka.jzlecenia.service.OrdersRetriever;
 import pl.kostrowski.doka.jzlecenia.service.UploadedFilesService;
 
@@ -37,7 +37,7 @@ public class AllController {
     @RequestMapping(value = "/details/files")
     public String displayFiles(Model model) {
 
-        List<MyFile> uplodedFiles = uploadedFilesService.diplayAllFiles();
+        List<InputFile> uplodedFiles = uploadedFilesService.diplayAllFiles();
         model.addAttribute("uploadedFiles", uplodedFiles);
 
         return "many/files";

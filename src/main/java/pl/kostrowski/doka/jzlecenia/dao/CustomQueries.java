@@ -1,25 +1,19 @@
 package pl.kostrowski.doka.jzlecenia.dao;
 
 
-import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import pl.kostrowski.doka.jzlecenia.dto.OrderDto;
 
-import javax.persistence.Convert;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import java.beans.PersistenceDelegate;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.time.Duration;
 import java.time.LocalDate;
-import java.time.Period;
 import java.time.temporal.ChronoUnit;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 @Repository
 public class CustomQueries {
@@ -86,9 +80,9 @@ public class CustomQueries {
             orderDto.setNrZlecenia((String) tempResult[0]);
 
             String rozneTonaze = (((BigInteger) tempResult[1]).intValue() > 1) ? "Tak, tyle wersji: "
-                    +  ((BigInteger) tempResult[1]).intValue():"Nie";
+                    + ((BigInteger) tempResult[1]).intValue() : "Nie";
             String rozneLiczbyLinii = (((BigInteger) tempResult[2]).intValue() > 1) ? "Tak, tyle wersji:  "
-                    +((BigInteger) tempResult[2]).intValue() :"Nie";
+                    + ((BigInteger) tempResult[2]).intValue() : "Nie";
 
             orderDto.setCzyRozneIlosciTonazu(rozneTonaze);
             orderDto.setCzyRozneIlosciLinii(rozneLiczbyLinii);
@@ -98,7 +92,7 @@ public class CustomQueries {
         return orderDtos;
     }
 
-    public List<OrderDto> getShortDeliveryTime(@Param("dateDiff") Integer dateDiff){
+    public List<OrderDto> getShortDeliveryTime(@Param("dateDiff") Integer dateDiff) {
 
         StringBuilder sb = new StringBuilder();
         sb.append("select distinct ");
@@ -118,7 +112,7 @@ public class CustomQueries {
     }
 
 
-    public List<OrderDto> getLongDeliveryTime(@Param("dateDiff") Integer dateDiff){
+    public List<OrderDto> getLongDeliveryTime(@Param("dateDiff") Integer dateDiff) {
 
         StringBuilder sb = new StringBuilder();
         sb.append("select distinct ");

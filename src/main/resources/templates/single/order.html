@@ -41,7 +41,7 @@
 
         <table class="table table-striped">
             <tr>
-                <th>Nazwa pliku</th>
+                <th>Z kiedy są dane</th>
                 <th>Nr artykułu</th>
                 <th>Nazwa artykułu</th>
                 <th>Ilość zamówiona</th>
@@ -51,7 +51,7 @@
                 <th>Nr klienta</th>
             </tr>
             <tr th:each="pos : ${allByNoOfOrder}">
-                <td th:text="${pos.getFileName()}"></td>
+                <td th:text="${pos.getInputFile().getFileDate()}"></td>
                 <td th:text="${pos.getNrArtykulu()}"></td>
                 <td th:text="${pos.getNazwaArtykulu()}"></td>
                 <td th:text="${pos.getIloscZamowiona()}"></td>

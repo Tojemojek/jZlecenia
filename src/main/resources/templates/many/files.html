@@ -24,15 +24,17 @@
         <table class="table table-striped">
             <tr>
                 <th>Nazwa pliku</th>
+                <th>Data z kiedy są dane</th>
                 <th>Kiedy wgrany</th>
                 <th>Skasuj plik</th>
             </tr>
             <tr th:each="pos : ${uploadedFiles}">
                 <td th:text="${pos.getFileName()}"></td>
+                <td th:text="${pos.getFileDate()}"></td>
                 <td th:text="${pos.getInputTimeStamp()}"></td>
                 <td>
                 <form class="form-inline" th:action="@{/delete/file}" method="POST">
-                    <input type="hidden" th:value="${pos.getFileName()}"  th:name="fileName">
+                    <input type="hidden" th:value="${pos.getId()}"  th:name="inputFileId">
                     <button type="submit" class="btn btn-danger">SKASUJ</button>
                 </form>
                 </td>

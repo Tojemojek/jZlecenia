@@ -25,9 +25,9 @@ public class DeleteController {
 
 
     @RequestMapping(value = "/delete/file", method = RequestMethod.POST)
-    public String showSingleList(@RequestParam(value = "fileName") String fileName) {
+    public String showSingleList(@RequestParam(value = "inputFileId") Long inputFileId) {
 
-        fileDeleter.deleteDateFromDbWhereFileNameIs(fileName);
+        fileDeleter.deleteDateFromDbWhereFileNameIs(inputFileId);
 
         return "redirect:/details/files";
     }

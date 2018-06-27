@@ -12,13 +12,14 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "dane")
 public class LineFromFile {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "file_name")
-    private String fileName;
+    @ManyToOne(cascade = CascadeType.ALL)
+    private InputFile inputFile;
 
     @Column(name = "nr_zlecenia")
     private String nrZlecenia;

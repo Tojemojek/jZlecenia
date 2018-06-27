@@ -9,11 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.kostrowski.doka.jzlecenia.converters.LineFromFileConverter;
 import pl.kostrowski.doka.jzlecenia.dao.DaneDao;
-import pl.kostrowski.doka.jzlecenia.dao.MyFileDao;
+import pl.kostrowski.doka.jzlecenia.dao.InputFileDao;
 import pl.kostrowski.doka.jzlecenia.dto.LineFromFileDto;
 import pl.kostrowski.doka.jzlecenia.mappings.MyMappings;
 import pl.kostrowski.doka.jzlecenia.model.LineFromFile;
-import pl.kostrowski.doka.jzlecenia.model.MyFile;
+import pl.kostrowski.doka.jzlecenia.model.InputFile;
 
 import javax.transaction.Transactional;
 import java.io.File;
@@ -28,16 +28,16 @@ public class ReadFromExcel {
 
     private final Logger LOG = LoggerFactory.getLogger(ReadFromExcel.class);
     private final DaneDao daneDao;
-    private final MyFileDao myFileDao;
+    private final InputFileDao inputFileDao;
     private final DataFormatter dataFormatter = new DataFormatter();
     private final LineFromFileConverter lineFromFileConverter;
 
 
     @Autowired
-    public ReadFromExcel(DaneDao daneDao, MyFileDao myFileDao, LineFromFileConverter lineFromFileConverter) {
+    public ReadFromExcel(DaneDao daneDao, InputFileDao inputFileDao, LineFromFileConverter lineFromFileConverter) {
         this.daneDao = daneDao;
         this.lineFromFileConverter = lineFromFileConverter;
-        this.myFileDao=myFileDao;
+        this.inputFileDao = inputFileDao;
     }
 
     @Transactional
@@ -45,15 +45,15 @@ public class ReadFromExcel {
 
         String fileName = file.getName();
 
-        MyFile myFile = new MyFile();
-        myFile.setFileName(fileName);
-        myFile.setInputTimeStamp(LocalDateTime.now());
+        InputFile inputFile = new InputFile();
+        inputFile.setFileName(fileName);
+        inputFile.setInputTimeStamp(LocalDateTime.now());
 
         try {
-            myFile.setFileDate(LocalDate.parse(StringUtils.substring(fileName, 0, 10)));
+            inputFile.setFileDate(LocalDate.parse(StringUtils.substring(fileName, 0, 10)));
         } catch (Exception e){
             LOG.warn("Nie udało się rozpoznać daty pliku " + fileName);
-            myFile.setFileDate(null);
+            inputFile.setFileDate(null);
         }
 
 
@@ -69,10 +69,10 @@ public class ReadFromExcel {
 
         List<LineFromFileDto> dataFromFile = getDataFromFile(columnNumbers, sheet);
 
-        List<LineFromFile> convert = lineFromFileConverter.convert(dataFromFile, fileName);
+        List<LineFromFile> convert = lineFromFileConverter.convert(dataFromFile, inputFile);
 
         daneDao.saveAll(convert);
-        myFileDao.save(myFile);
+
     }
 
     private Map<String, Integer> findColumnNumbers(Map<String, String> invertedMappings, Row titleRow) {
@@ -176,10 +176,10 @@ public class ReadFromExcel {
         try {
             return dataFormatter.formatCellValue(currentRow.getCell(columnNumber));
         } catch (NullPointerException e) {
-            LOG.debug("komórka pusta" + " parseStringFromCell row " + currentRow.getRowNum() + " kol " + columnNumber);
+            LOG.trace("komórka pusta" + " parseStringFromCell row " + currentRow.getRowNum() + " kol " + columnNumber);
             return null;
         } catch (Exception e) {
-            LOG.info(e.toString() + " parseStringFromCell row " + currentRow.getRowNum() + " kol " + columnNumber);
+            LOG.debug(e.toString() + " parseStringFromCell row " + currentRow.getRowNum() + " kol " + columnNumber);
             return null;
         }
     }
@@ -189,7 +189,7 @@ public class ReadFromExcel {
         try {
             return currentRow.getCell(columnNumber).getNumericCellValue();
         } catch (NullPointerException e) {
-            LOG.debug("komórka pusta" + " parseDoubleFromCell row " + currentRow.getRowNum() + " kol " + columnNumber);
+            LOG.trace("komórka pusta" + " parseDoubleFromCell row " + currentRow.getRowNum() + " kol " + columnNumber);
             return null;
         } catch (Exception e) {
             LOG.info(e.toString() + " parseDoubleFromCell row " + currentRow.getRowNum() + " kol " + columnNumber);
@@ -207,10 +207,8 @@ public class ReadFromExcel {
             }
             return null;
         } catch (NullPointerException e) {
-            LOG.debug("komórka pusta" + " parseIntegerFromCell row " + currentRow.getRowNum() + " kol " + columnNumber);
+            LOG.trace("komórka pusta" + " parseIntegerFromCell row " + currentRow.getRowNum() + " kol " + columnNumber);
             return null;
-
-
         } catch (Exception e) {
             LOG.info(e.toString() + " parseIntegerFromCell row " + currentRow.getRowNum() + " kol " + columnNumber);
             return null;
@@ -222,7 +220,7 @@ public class ReadFromExcel {
             Date dateCellValue = currentRow.getCell(columnNumber).getDateCellValue();
             return dateCellValue.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         } catch (NullPointerException e) {
-            LOG.debug("komórka pusta" + " parseLocalDateFromCell row " + currentRow.getRowNum() + " kol " + columnNumber);
+            LOG.trace("komórka pusta" + " parseLocalDateFromCell row " + currentRow.getRowNum() + " kol " + columnNumber);
             return null;
         } catch (Exception e) {
             LOG.info(e.toString() + " parseLocalDateFromCell row " + currentRow.getRowNum() + " kol " + columnNumber);
@@ -235,7 +233,7 @@ public class ReadFromExcel {
             Date dateCellValue = currentRow.getCell(columnNumber).getDateCellValue();
             return dateCellValue.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
         } catch (NullPointerException e) {
-            LOG.debug("komórka pusta" + " parseLocalDateTimeFromCell row " + currentRow.getRowNum() + " kol " + columnNumber);
+            LOG.trace("komórka pusta" + " parseLocalDateTimeFromCell row " + currentRow.getRowNum() + " kol " + columnNumber);
             return null;
         } catch (Exception e) {
             LOG.info(e.toString() + " parseLocalDateFromCell row " + currentRow.getRowNum() + " kol " + columnNumber);
