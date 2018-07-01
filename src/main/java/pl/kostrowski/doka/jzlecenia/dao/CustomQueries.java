@@ -31,7 +31,7 @@ public class CustomQueries {
         sb.append("WHERE ");
         sb.append("ilosc_zamowiona IS NOT null ");
         sb.append("AND masa_jednostkowa IS NOT null ");
-        sb.append("GROUP by nr_zlecenia, file_name ");
+        sb.append("GROUP by nr_zlecenia, INPUT_FILE_ID ");
         sb.append("ORDER by nr_zlecenia");
 
         String myQuery = sb.toString();
@@ -91,6 +91,37 @@ public class CustomQueries {
         }
         return orderDtos;
     }
+
+    public List<OrderDto> getListOfModifiedOrder(String orderId) {
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("select zl.NR_ZLECENIA, p.FILE_DATE,  zl.LICZBA_WIERSZY, zl.SUMA_TONAZU from zlecenia zl ");
+        sb.append("left join pliki p on p.ID = zl.INPUT_FILE_ID ");
+        sb.append("where nr_zlecenia ='");
+        sb.append(orderId);
+        sb.append("'");
+        sb.append(" order by p.FILE_DATE ASC");
+
+        String myQuery = sb.toString();
+
+        Query query = em.createNativeQuery(myQuery);
+        List<Object[]> tempResults = query.getResultList();
+
+        List<OrderDto> orderDtos = new LinkedList<>();
+
+        for (Object[] tempResult : tempResults) {
+            OrderDto orderDto = new OrderDto();
+
+            orderDto.setNrZlecenia((String) tempResult[0]);
+            orderDto.setDataZPliku(((java.sql.Date) tempResult[1]).toLocalDate());
+            orderDto.setLiczbaLinii(((BigInteger) tempResult[2]).intValue());
+            orderDto.setTonaz(((BigDecimal) tempResult[3]).doubleValue());
+            orderDtos.add(orderDto);
+        }
+        return orderDtos;
+    }
+
+
 
     public List<OrderDto> getShortDeliveryTime(@Param("dateDiff") Integer dateDiff) {
 

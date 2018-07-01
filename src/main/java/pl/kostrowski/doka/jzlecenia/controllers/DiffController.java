@@ -23,10 +23,9 @@ public class DiffController {
     }
 
     @RequestMapping(value = "/details/diff")
-    public String showDiff(@RequestParam(value = "orderNo", required=false) String orderNo,
-                           Model model) {
+    public String showDiff(Model model) {
 
-        List<OrderDto> showDiff = ordersRetriever.showDiffOrders(orderNo);
+        List<OrderDto> showDiff = ordersRetriever.showDiffOrders();
         model.addAttribute("showDiff", showDiff);
 
         return "diff/orderdiff";

@@ -29,19 +29,30 @@
         </div>
     </div>
 
-    <div th:if="${not #lists.isEmpty(allByNoOfOrder)}">
+    <div th:if="${not #lists.isEmpty(diffOrdersGeneral)}">
 
-        <h2>Zlecenie</h2>
-        <p>Na tej liście wymienine są szczegóły zlecenia</p>
-        <p>Mogą występować duplikaty</p>
-
-
-        <h2 th:text="${'Zlecenie numer ' + allByNoOfOrder.get(0).getNrZlecenia()}"> </h2>
-        <h2 th:text="${'Liczba wierszy ' + allByNoOfOrder.size()}"> </h2>
+        <h2 th:text="${'Zlecenie numer ' + diffOrdersGeneral.get(0).getNrZlecenia()}"></h2>
 
         <table class="table table-striped">
             <tr>
-                <th>Z kiedy są dane</th>
+                <th>Dane z dnia</th>
+                <th>Liczba linii</th>
+                <th>Tonaz</th>
+            </tr>
+            <tr th:each="pos : ${diffOrdersGeneral}">
+                <td th:text="${pos.getDataZPliku()}"></td>
+                <td th:text="${pos.getLiczbaLinii()}"></td>
+                <td th:text="${pos.getTonaz()}"></td>
+            </tr>
+        </table>
+    </div>
+
+    <div th:if="${not #lists.isEmpty(diffOrdersDetails)}">
+
+        <h2>Szczegóły różnic</h2>
+
+        <table class="table table-striped">
+            <tr>
                 <th>Nr artykułu</th>
                 <th>Nazwa artykułu</th>
                 <th>Ilość zamówiona</th>
@@ -50,8 +61,15 @@
                 <th>Nr projektu</th>
                 <th>Nr klienta</th>
             </tr>
-            <tr th:each="pos : ${allByNoOfOrder}">
-                <td th:text="${pos.getInputFile().getFileDate()}"></td>
+
+            <span th:each="ord : ${diffOrdersDetails}">
+
+            <tr>
+                <td colspan="7">
+                    <h2 th:text="${'Dane z dnia ' + ord.get(0).getInputFile().getFileDate()+ ' Liczba wierszy ' + ord.size()}"> </h2>
+                </td>
+            </tr>
+            <tr th:each="pos : ${ord}">
                 <td th:text="${pos.getNrArtykulu()}"></td>
                 <td th:text="${pos.getNazwaArtykulu()}"></td>
                 <td th:text="${pos.getIloscZamowiona()}"></td>
@@ -60,8 +78,10 @@
                 <td th:text="${pos.getNrProjektu()}"></td>
                 <td th:text="${pos.getNrKlienta()}"></td>
             </tr>
+
+            </span>
         </table>
-        </span>
+
     </div>
 </div>
 

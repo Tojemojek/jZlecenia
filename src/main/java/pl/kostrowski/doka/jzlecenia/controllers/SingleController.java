@@ -5,30 +5,26 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import pl.kostrowski.doka.jzlecenia.dto.OrderDto;
-import pl.kostrowski.doka.jzlecenia.model.LineFromFile;
-import pl.kostrowski.doka.jzlecenia.service.OrdersRetriever;
-
-import java.util.List;
+import pl.kostrowski.doka.jzlecenia.service.OrderDisplayer;
 
 
 @Controller
 public class SingleController {
 
-    private final OrdersRetriever ordersRetriever;
+    private final OrderDisplayer orderDisplayer;
 
     @Autowired
-    public SingleController(OrdersRetriever ordersRetriever) {
-        this.ordersRetriever = ordersRetriever;
+    public SingleController(OrderDisplayer orderDisplayer) {
+        this.orderDisplayer = orderDisplayer;
     }
 
     @RequestMapping(value = "/details/order")
     public String showSingleList(@RequestParam(value = "orderNo", required=false) String orderNo,
                                  Model model) {
 
-        List<LineFromFile> allByNoOfOrder = ordersRetriever.displayOrderWithNumber(orderNo);
-        model.addAttribute("allByNoOfOrder", allByNoOfOrder);
+        model.addAttribute("diffOrdersGeneral", orderDisplayer.displayDifferencesInOrders(orderNo));
 
+        model.addAttribute("diffOrdersDetails", orderDisplayer.diplayOrderWithDiffInfo(orderNo));
         return "single/order";
     }
 

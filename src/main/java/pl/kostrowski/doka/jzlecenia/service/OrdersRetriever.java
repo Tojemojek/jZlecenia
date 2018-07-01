@@ -37,14 +37,22 @@ public class OrdersRetriever {
         return new LinkedList<>();
     }
 
-    public List<OrderDto> showDiffOrders(String orderNo) {
+    public List<OrderDto> showDiffOrders() {
 
         List<OrderDto> listOfModifiedOrders = customQueries.getListOfModifiedOrders();
 
         return listOfModifiedOrders;
 
+    }
+
+    public List<OrderDto> showSingleDiffOrder(String orderId) {
+
+        List<OrderDto> listOfModifiedOrders = customQueries.getListOfModifiedOrder(orderId);
+
+        return listOfModifiedOrders;
 
     }
+
 
     public List<OrderDto> showShortDeliveryOders(Integer dateDiff) {
 

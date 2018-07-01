@@ -19,7 +19,7 @@
     </parent>
 
     <properties>
-        <version.app>0.0.2-SNAPSHOT</version.app>
+        <version.app>0.0.3-SNAPSHOT</version.app>
         <version.spring.boot.starter.actuator>2.0.2.RELEASE</version.spring.boot.starter.actuator>
         <version.spring.boot.starter.thymeleaf>2.0.2.RELEASE</version.spring.boot.starter.thymeleaf>
         <version.spring.boot.starter.web>2.0.2.RELEASE</version.spring.boot.starter.web>

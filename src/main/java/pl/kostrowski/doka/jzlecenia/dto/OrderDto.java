@@ -33,5 +33,7 @@ public class OrderDto {
 
     private Integer czasNaReakcje;
 
+    private LocalDate dataZPliku;
+
 
 }
